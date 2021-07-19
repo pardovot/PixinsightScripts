@@ -45,45 +45,27 @@ function pushButtonWithTextOnClick(parent, text_, onClick_) {
 function LSNParPrototype() {
    this.setDefaults = function () {
       this.targetView = null;
-      this.mtfShadowClip = -3.5;
-      this.mtfBG = 0.1;
-      this.ShowClipMap = true;
-      this.OnlyTryClip = false
       this.starnetStride = StarNet.prototype.Stride_128;
       this.SNStars = false;
       this.CopyView = false;
       this.linkedRGB = false;
-      this.Pc0 = 0;
-      this.Pm = 0.5;
 
    };
 
    this.setParameters = function () {
       Parameters.clear();
-      Parameters.set("mtfShadowClip", this.mtfShadowClip);
-      Parameters.set("mtfBG", this.mtfBG);
-      Parameters.set("ShowClipMap", this.ShowClipMap);
-      Parameters.set("OnlyTryClip", this.OnlyTryClip);
       Parameters.set("starnetStride", this.starnetStride);
       Parameters.set("SNStars", this.SNStars);
       Parameters.set("CopyView", this.CopyView);
       Parameters.set("linkedRGB", this.linkedRGB);
-      Parameters.set("Pc0", this.Pc0);
-      Parameters.set("Pm", this.Pm);
 
    }
 
    this.getParameters = function () {
-      this.mtfShadowClip = Parameters.has("mtfShadowClip") ? Parameters.getReal("mtfShadowClip") : -3.5;
-      this.mtfBG = Parameters.has("mtfBG") ? Parameters.getReal("mtfBG") : 0.1;
-      this.ShowClipMap = Parameters.has("ShowClipMap") ? Parameters.getBoolean("ShowClipMap") : true;
-      this.OnlyTryClip = Parameters.has("OnlyTryClip") ? Parameters.getBoolean("OnlyTryClip") : false;
       this.starnetStride = Parameters.has("starnetStride") ? Parameters.getReal("starnetStride") : StarNet.prototype.Stride_128;
       this.SNStars = Parameters.has("SNStars") ? Parameters.getBoolean("SNStars") : false;
       this.CopyView = Parameters.has("CopyView") ? Parameters.getBoolean("CopyView") : false;
       this.linkedRGB = Parameters.has("linkedRGB") ? Parameters.getBoolean("linkedRGB") : false;
-      this.Pc0 = Parameters.has("Pc0") ? Parameters.getReal("Pc0") : 0;
-      this.Pm = Parameters.has("Pm") ? Parameters.getReal("Pm") : 0.5;
    }
 }
 var LSNPar = new LSNParPrototype();
@@ -308,32 +290,6 @@ function reverseStretch(htfArray) {
    }
 
    return reversedArray;
-}
-
-function Subtract(IDViewA, IDViewB, offset) {
-
-   let SUB = new PixelMath;
-   SUB.expression = IDViewA + "-" + IDViewB + "+" + offset;
-   return SUB
-
-}
-
-function getNewStarMaskView() {
-   let view = View.viewById("star_mask");
-   let prefix = "star_mask";
-
-   for(let i = 99; i > 0; i--) {
-      if (!View.viewById(prefix + i).isNull) {
-         view = View.viewById(prefix + i);
-         break;
-      }
-   }
-
-   if (!view) {
-      throw "Couldn't find star map view";
-   }
-
-   return view;
 }
 
 function applySTF(view, linkedRGB) {
